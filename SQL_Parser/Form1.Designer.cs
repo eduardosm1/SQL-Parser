@@ -28,12 +28,81 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.txtQuery = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnAceptar = new System.Windows.Forms.Button();
+            this.listLexico = new System.Windows.Forms.ListBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.SuspendLayout();
+            // 
+            // txtQuery
+            // 
+            this.txtQuery.Location = new System.Drawing.Point(12, 25);
+            this.txtQuery.Multiline = true;
+            this.txtQuery.Name = "txtQuery";
+            this.txtQuery.Size = new System.Drawing.Size(226, 40);
+            this.txtQuery.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Query";
+            // 
+            // btnAceptar
+            // 
+            this.btnAceptar.Location = new System.Drawing.Point(12, 71);
+            this.btnAceptar.Name = "btnAceptar";
+            this.btnAceptar.Size = new System.Drawing.Size(75, 23);
+            this.btnAceptar.TabIndex = 2;
+            this.btnAceptar.Text = "Aceptar";
+            this.btnAceptar.UseVisualStyleBackColor = true;
+            this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
+            // 
+            // listLexico
+            // 
+            this.listLexico.FormattingEnabled = true;
+            this.listLexico.Location = new System.Drawing.Point(12, 121);
+            this.listLexico.Name = "listLexico";
+            this.listLexico.Size = new System.Drawing.Size(226, 316);
+            this.listLexico.TabIndex = 3;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 105);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(76, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Analisis Lexico";
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(263, 455);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.listLexico);
+            this.Controls.Add(this.btnAceptar);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.txtQuery);
+            this.Name = "Form1";
+            this.Text = "SQL Parser";
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
+
+        private System.Windows.Forms.TextBox txtQuery;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnAceptar;
+        private System.Windows.Forms.ListBox listLexico;
+        private System.Windows.Forms.Label label2;
     }
 }
 

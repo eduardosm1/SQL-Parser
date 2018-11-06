@@ -33,6 +33,8 @@ namespace SQL_Parser
             listLexico.Items.Clear();
             List<string> Tokens = new List<string>();
             List<string> cadena = new List<string>();
+            bool lexico = true;
+            bool sintactico = false;
             string temp = "";
             bool validacion_espacio = false;
             for (int i = 0; i < txtQuery.Text.Length; i++)
@@ -43,7 +45,7 @@ namespace SQL_Parser
                 }
                 if (txtQuery.Text[i] != ' ')
                 {
-                    if (txtQuery.Text[i] == '(' || txtQuery.Text[i] == ')' || txtQuery.Text[i] == ',')
+                    if (txtQuery.Text[i] == '(' || txtQuery.Text[i] == ')' || txtQuery.Text[i] == ',' || txtQuery.Text[i] == '+' || txtQuery.Text[i] == '-' || txtQuery.Text[i] == '/' || txtQuery.Text[i] == '*' || txtQuery.Text[i] == '=')
                     {
                         if (temp != "")
                             cadena.Add(temp);
@@ -73,7 +75,7 @@ namespace SQL_Parser
                 {
                     if (cad.ToUpper() == reservada)
                     {
-                        Tokens.Add("Palabra_Reservada - " + cad);
+                        Tokens.Add("Palabra_Reservada");
                         validacion = true;
                         break;
                     }
@@ -82,7 +84,7 @@ namespace SQL_Parser
                 {
                     if (cad.ToUpper() == tipo)
                     {
-                        Tokens.Add("Tipo_Dato - " + cad);
+                        Tokens.Add("Tipo_Dato");
                         validacion = true;
                         break;
                     }
@@ -91,7 +93,7 @@ namespace SQL_Parser
                 {
                     if (cad == agrupador)
                     {
-                        Tokens.Add("Agrupador - " + cad);
+                        Tokens.Add("Agrupador");
                         validacion = true;
                         break;
                     }
@@ -100,7 +102,7 @@ namespace SQL_Parser
                 {
                     if (cad == separador)
                     {
-                        Tokens.Add("Separador - " + cad);
+                        Tokens.Add("Separador");
                         validacion = true;
                         break;
                     }
@@ -109,7 +111,7 @@ namespace SQL_Parser
                 {
                     if (cad == operador)
                     {
-                        Tokens.Add("Operador - " + cad);
+                        Tokens.Add("Operador");
                         validacion = true;
                         break;
                     }
@@ -118,7 +120,7 @@ namespace SQL_Parser
                 {
                     if  (cad == comparador)
                     {
-                        Tokens.Add("Comparador - " + cad);
+                        Tokens.Add("Comparador");
                         validacion = true;
                         break;
                     }
@@ -127,19 +129,20 @@ namespace SQL_Parser
                 {
                     if (Regex.IsMatch(cad, identificador))
                     {
-                        Tokens.Add("Identificador - " + cad);
+                        Tokens.Add("Identificador");
                     }
                     else if(Regex.IsMatch(cad, numero))
                     {
-                        Tokens.Add("Numero - " + cad);
+                        Tokens.Add("Numero");
                     }
                     else if (Regex.IsMatch(cad, cadenas))
                     {
-                        Tokens.Add("Cadena - " + cad);
+                        Tokens.Add("Cadena");
                     }
                     else
                     {
                         Tokens.Add("INVALIDO - "+cad);
+                        lexico = false;
                     }
                 }
             }
@@ -147,6 +150,146 @@ namespace SQL_Parser
             {
                 listLexico.Items.Add(palabra);
             }
+            switch (cadena[0].ToUpper())
+            {
+                case "CREATE":
+                    try
+                    {
+                        if (cadena[1].ToUpper() == "DATABASE")
+                        {
+                            if (Tokens[2] == "Identificador")
+                            {
+                                sintactico = true;
+                            }
+                        }
+                        else if (cadena[1].ToUpper() == "TABLE")
+                        {
+                            if (Tokens[2] == "Identificador")
+                            {
+                                if (cadena[3] == "(")
+                                {
+                                    int x = 4;
+                                    while (cadena[x] != ")")
+                                    {
+                                        if (Tokens[x] == "Identificador")
+                                        {
+                                            x++;
+                                            if (Tokens[x] == "Tipo_Dato")
+                                            {
+                                                x++;
+                                                if (cadena[x] == "(")
+                                                {
+                                                    x++;
+                                                    if (Tokens[x] == "Numero")
+                                                    {
+                                                        x++;
+                                                        if (cadena[x] == ")")
+                                                        {
+                                                            x++;
+                                                            if (cadena[x] == ")")
+                                                                sintactico = true;
+                                                            else if (cadena[x] != ",")
+                                                                break;
+                                                            else
+                                                                x++;
+                                                        }
+                                                        else
+                                                            break;
+                                                    }
+                                                    else
+                                                        break;
+                                                }
+                                                else
+                                                    break;
+                                            }
+                                            else
+                                                break;
+                                        }
+                                        else
+                                            break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch { }
+                    break;
+                case "DROP":
+                    try
+                    {
+                        if (cadena[1].ToUpper() == "TABLE" ||cadena[1].ToUpper() == "DATABASE")
+                        {
+                            if (Tokens[2] == "Identificador")
+                            {
+                                sintactico = true;
+                            }
+                        }
+                    }
+                    catch { }
+                    break;
+                case "INSERT":
+                    try
+                    {
+                        if (cadena[1].ToUpper() == "INTO")
+                        {
+                            if (Tokens[2] == "Identificador")
+                            {
+                                int x = 3;
+                                bool bandera = true;
+                                if (cadena[x] == "(")
+                                {
+                                    x++;
+                                    bandera = false;
+                                    while (cadena[x] != ")")
+                                    {
+                                        if (Tokens[x] == "Identificador")
+                                        {
+                                            x++;
+                                            if (cadena[x] == ")")
+                                            {
+                                                bandera = true;
+                                            }
+                                            else if (cadena[x] != ",")
+                                                break;
+                                            else
+                                                x++;
+                                        }
+                                    }
+                                    x++;
+                                }
+
+                                if (bandera)
+                                {
+                                    if (cadena[x].ToUpper() == "VALUES")
+                                    {
+                                        x++;
+                                        if (cadena[x] == "(")
+                                        {
+                                            x++;
+                                            while (cadena[x] != ")")
+                                            {
+                                                if (Tokens[x] == "Cadena" ||Tokens[x] == "Numero")
+                                                {
+                                                    x++;
+                                                    if (cadena[x] == ")")
+                                                        sintactico = true;
+                                                    else if (cadena[x] != ",")
+                                                        break;
+                                                    else
+                                                        x++;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch { }
+                    break;
+            }
+            lbLexico.Text = "Analisis Lexico: " + lexico.ToString();
+            lbSintactico.Text = "Analisis Sintactico: " + sintactico.ToString();
         }
     }
 }

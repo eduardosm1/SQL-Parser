@@ -33,6 +33,8 @@
             this.btnAceptar = new System.Windows.Forms.Button();
             this.listLexico = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.lbLexico = new System.Windows.Forms.Label();
+            this.lbSintactico = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtQuery
@@ -54,7 +56,7 @@
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Location = new System.Drawing.Point(12, 71);
+            this.btnAceptar.Location = new System.Drawing.Point(80, 71);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(75, 23);
             this.btnAceptar.TabIndex = 2;
@@ -79,11 +81,31 @@
             this.label2.TabIndex = 4;
             this.label2.Text = "Analisis Lexico";
             // 
+            // lbLexico
+            // 
+            this.lbLexico.AutoSize = true;
+            this.lbLexico.Location = new System.Drawing.Point(12, 440);
+            this.lbLexico.Name = "lbLexico";
+            this.lbLexico.Size = new System.Drawing.Size(82, 13);
+            this.lbLexico.TabIndex = 5;
+            this.lbLexico.Text = "Analisis Lexico: ";
+            // 
+            // lbSintactico
+            // 
+            this.lbSintactico.AutoSize = true;
+            this.lbSintactico.Location = new System.Drawing.Point(12, 453);
+            this.lbSintactico.Name = "lbSintactico";
+            this.lbSintactico.Size = new System.Drawing.Size(98, 13);
+            this.lbSintactico.TabIndex = 6;
+            this.lbSintactico.Text = "Analisis Sintactico: ";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(263, 455);
+            this.ClientSize = new System.Drawing.Size(263, 476);
+            this.Controls.Add(this.lbSintactico);
+            this.Controls.Add(this.lbLexico);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.listLexico);
             this.Controls.Add(this.btnAceptar);
@@ -103,6 +125,8 @@
         private System.Windows.Forms.Button btnAceptar;
         private System.Windows.Forms.ListBox listLexico;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lbLexico;
+        private System.Windows.Forms.Label lbSintactico;
     }
 }
 

@@ -35,6 +35,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.lbLexico = new System.Windows.Forms.Label();
             this.lbSintactico = new System.Windows.Forms.Label();
+            this.txtMsg = new System.Windows.Forms.TextBox();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.listTables = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // txtQuery
@@ -42,7 +45,7 @@
             this.txtQuery.Location = new System.Drawing.Point(12, 25);
             this.txtQuery.Multiline = true;
             this.txtQuery.Name = "txtQuery";
-            this.txtQuery.Size = new System.Drawing.Size(226, 40);
+            this.txtQuery.Size = new System.Drawing.Size(260, 70);
             this.txtQuery.TabIndex = 0;
             // 
             // label1
@@ -56,7 +59,7 @@
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Location = new System.Drawing.Point(80, 71);
+            this.btnAceptar.Location = new System.Drawing.Point(76, 101);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(75, 23);
             this.btnAceptar.TabIndex = 2;
@@ -67,15 +70,15 @@
             // listLexico
             // 
             this.listLexico.FormattingEnabled = true;
-            this.listLexico.Location = new System.Drawing.Point(12, 121);
+            this.listLexico.Location = new System.Drawing.Point(12, 147);
             this.listLexico.Name = "listLexico";
-            this.listLexico.Size = new System.Drawing.Size(226, 316);
+            this.listLexico.Size = new System.Drawing.Size(197, 329);
             this.listLexico.TabIndex = 3;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 105);
+            this.label2.Location = new System.Drawing.Point(9, 131);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(76, 13);
             this.label2.TabIndex = 4;
@@ -84,7 +87,7 @@
             // lbLexico
             // 
             this.lbLexico.AutoSize = true;
-            this.lbLexico.Location = new System.Drawing.Point(12, 440);
+            this.lbLexico.Location = new System.Drawing.Point(12, 485);
             this.lbLexico.Name = "lbLexico";
             this.lbLexico.Size = new System.Drawing.Size(82, 13);
             this.lbLexico.TabIndex = 5;
@@ -93,17 +96,45 @@
             // lbSintactico
             // 
             this.lbSintactico.AutoSize = true;
-            this.lbSintactico.Location = new System.Drawing.Point(12, 453);
+            this.lbSintactico.Location = new System.Drawing.Point(12, 498);
             this.lbSintactico.Name = "lbSintactico";
             this.lbSintactico.Size = new System.Drawing.Size(98, 13);
             this.lbSintactico.TabIndex = 6;
             this.lbSintactico.Text = "Analisis Sintactico: ";
             // 
+            // txtMsg
+            // 
+            this.txtMsg.Location = new System.Drawing.Point(325, 25);
+            this.txtMsg.Multiline = true;
+            this.txtMsg.Name = "txtMsg";
+            this.txtMsg.Size = new System.Drawing.Size(290, 70);
+            this.txtMsg.TabIndex = 7;
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(215, 147);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(197, 329);
+            this.listBox1.TabIndex = 8;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            // 
+            // listTables
+            // 
+            this.listTables.FormattingEnabled = true;
+            this.listTables.Location = new System.Drawing.Point(418, 147);
+            this.listTables.Name = "listTables";
+            this.listTables.Size = new System.Drawing.Size(197, 329);
+            this.listTables.TabIndex = 9;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(263, 476);
+            this.ClientSize = new System.Drawing.Size(632, 520);
+            this.Controls.Add(this.listTables);
+            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.txtMsg);
             this.Controls.Add(this.lbSintactico);
             this.Controls.Add(this.lbLexico);
             this.Controls.Add(this.label2);
@@ -127,6 +158,9 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lbLexico;
         private System.Windows.Forms.Label lbSintactico;
+        private System.Windows.Forms.TextBox txtMsg;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox listTables;
     }
 }
 

@@ -42,7 +42,7 @@ namespace SQL_Parser
             bool sintactico = false;
             string temp = "";
             bool validacion_espacio = false;
-
+            txtMsg.Text = "";
             // ANALISIS LEXICO
             for (int i = 0; i < txtQuery.Text.Length; i++)
             {
@@ -182,6 +182,8 @@ namespace SQL_Parser
                             {
                                 sintactico = true;
                             }
+                            else
+                                txtMsg.Text += "Error sintactico despues de DATABASE";
                         }
                         else if (cadena[1].ToUpper() == "TABLE")
                         {
@@ -215,15 +217,24 @@ namespace SQL_Parser
                                                                 x++;
                                                         }
                                                         else
+                                                        {
+                                                            txtMsg.Text += "Error sintactico despues de " + cadena[2];
                                                             break;
+                                                        }
                                                     }
                                                     else
+                                                    {
+                                                        txtMsg.Text += "Error sintactico despues de " + cadena[2];
                                                         break;
+                                                    }
                                                 }
                                                 else
+                                                {
+                                                    txtMsg.Text += "Error sintactico despues de " + cadena[2];
                                                     break;
+                                                }
                                             }
-                                            else if (cadena[x].ToUpper() == "INT" || cadena[x].ToUpper() =="FLOAT")
+                                            else if (cadena[x].ToUpper() == "INT" || cadena[x].ToUpper() == "FLOAT")
                                             {
                                                 x++;
                                                 if (cadena[x] == ")")
@@ -234,27 +245,42 @@ namespace SQL_Parser
                                                     x++;
                                             }
                                             else
+                                            {
+                                                txtMsg.Text += "Error sintactico despues de " + cadena[2];
                                                 break;
+                                            }
                                         }
                                         else
+                                        {
+                                            txtMsg.Text += "Error sintactico despues de " + cadena[2];
                                             break;
+                                        }
                                     }
                                 }
+                                else
+                                    txtMsg.Text += "Error sintactico despues de " + cadena[2];
                             }
+                            else
+                                txtMsg.Text += "Error sintactico despues de TABLE";
                         }
+                        else
+                            txtMsg.Text += "Error sintactico despues de CREATE";
                     }
                     catch { }
                     break;
                 case "DROP":
                     try
                     {
-                        if (cadena[1].ToUpper() == "TABLE" ||cadena[1].ToUpper() == "DATABASE")
+                        if (cadena[1].ToUpper() == "TABLE" || cadena[1].ToUpper() == "DATABASE")
                         {
                             if (Tokens[2] == "Identificador")
                             {
                                 sintactico = true;
                             }
+                            txtMsg.Text += "Error sintactico despues de " + cadena[1].ToUpper();
                         }
+                        else
+                            txtMsg.Text += "Error sintactico despues de DROP";
                     }
                     catch { }
                     break;
@@ -299,7 +325,7 @@ namespace SQL_Parser
                                             x++;
                                             while (cadena[x] != ")")
                                             {
-                                                if (Tokens[x] == "Cadena" ||Tokens[x] == "Numero")
+                                                if (Tokens[x] == "Cadena" || Tokens[x] == "Numero")
                                                 {
                                                     x++;
                                                     if (cadena[x] == ")")
@@ -311,10 +337,16 @@ namespace SQL_Parser
                                                 }
                                             }
                                         }
+                                        else
+                                            txtMsg.Text += "Error sintactico despues de VALUES";
                                     }
                                 }
                             }
+                            else
+                                txtMsg.Text += "Error sintactico despues de INTO";
                         }
+                        else
+                            txtMsg.Text += "Error sintactico despues de INSERT";
                     }
                     catch { }
                     break;
@@ -366,9 +398,15 @@ namespace SQL_Parser
                                             }
                                         }
                                     }
+                                    else
+                                        txtMsg.Text += "Error sintactico despues de WHERE";
                                 }
                             }
+                            else
+                                txtMsg.Text += "Error sintactico despues de FROM";
                         }
+                        else
+                            txtMsg.Text += "Error sintactico despues de DELETE";
                     }
                     catch { }
                     break;
@@ -416,7 +454,7 @@ namespace SQL_Parser
                                             {
                                                 if (x == cadena.Count - 1)
                                                     sintactico = true;
-                                                else if(cadena[x].ToUpper() == "WHERE")
+                                                else if (cadena[x].ToUpper() == "WHERE")
                                                 {
                                                     x++;
                                                     if (Tokens[x] == "Cadena" || Tokens[x] == "Numero" || Tokens[x] == "Identificador")
@@ -458,13 +496,19 @@ namespace SQL_Parser
                                                             }
                                                         }
                                                     }
+                                                    else
+                                                        txtMsg.Text += "Error sintactico despues de WHERE";
                                                 }
                                             }
                                         }
                                     }
                                 }
+                                else
+                                    txtMsg.Text += "Error sintactico despues de SET";
                             }
                         }
+                        else
+                            txtMsg.Text += "Error sintactico despues de UPDATE";
                     }
                     catch { }
                     break;
@@ -524,6 +568,7 @@ namespace SQL_Parser
                                                 }
                                             }
                                         }
+                                        txtMsg.Text += "Error sintactico despues de WHERE";
                                     }
                                     if (cadena[x].ToUpper() == "ORDER BY")
                                     {
@@ -532,12 +577,21 @@ namespace SQL_Parser
                                         {
                                             sintactico = true;
                                         }
+                                        else
+                                            txtMsg.Text += "Error sintactico despues de ORDER BY";
                                     }
                                 }
+                                else
+                                    txtMsg.Text += "Error sintactico despues de FROM";
                             }
                         }
+                        else
+                            txtMsg.Text += "Error sintactico despues de SELECT";
                     }
                     catch { }
+                    break;
+                default:
+                    txtMsg.Text += "No se reconoce el comando ingresado";
                     break;
             }
 
@@ -548,20 +602,16 @@ namespace SQL_Parser
         }
 
         //Variables
-        StringBuilder AlertaSQL = new StringBuilder();//es como una variable string pero más chingon :v, si no furula es porque estas usando un framework defasado
+        StringBuilder AlertaSQL = new StringBuilder();
         private SqlCommand insert1;
         public void SQLexistente() //Metodo creado para verficar si ya existe tabla o base de datos creados
         {
             try
             {
                 if (txtQuery.Text.ToString() == "")
-                {
-                    //Evitando pruebas de bobos :v
-                }
+                { }
                 else
                 {
-                    //"conn" es el nombre que me crea el enlace con mi base de datos, ¡OJO PERRO! tienes que declarar "private SqlConnection conn;"
-                    //"insert1" es el nombre que me va hacer la consulta con la base de datos. ¡OJO PERRO! tienes que declarar "private SqlCommand insert1;"
                     try
                     {
                         String cadenabase = "use " + listBox1.Items[listBox1.SelectedIndex].ToString();
@@ -581,6 +631,7 @@ namespace SQL_Parser
                 for (int i = 0; i < ex.Errors.Count; i++)
                 {
                     AlertaSQL.Append(ex.Message);
+                    /*
                     if (ex.Errors[i].Number == 2714)//2714 es el numero de error que se da por crear una tabla con un nombre que ya existe en la base de datos
                     {
                         //AlertaSQL.Append(....) aqui guardara el indice, numero de error y el numero de linea donde se encuentra el error
@@ -594,20 +645,16 @@ namespace SQL_Parser
                     }
                     else if (ex.Errors[i].Number == 1801)//1801 es el numero de error que se da por crear una base de datos con un nombre que ya existe en la base de datos
                     {
-                        //AlertaSQL.Append(....) aqui guardara el indice, numero de error y el numero de linea donde se encuentra el error
                         AlertaSQL.Append("Indice # " + i + "\r\n" +
                             "Mensaje: " + ex.Errors[i].Message + "\r\n" +
                             "Numero: " + ex.Errors[i].Number + "\r\n" +
                             "Numero de linea: " + ex.Errors[i].LineNumber + "\r\n");
-                        //AlertaSQL.Reaplace(....) aqui remplazamos el mensaje de error en ingles por español :v
                         AlertaSQL.Replace("Database", "Base de datos");
                         AlertaSQL.Replace("already exists. Choose a different database name.", "ya existe. Elija un nombre database diferente"); //remplaza "already exists. Choose a different database name." por 
                     }
+                    */
                 }
-                //Actualiza Texbox, se puede cambiar por mensaje de error
                 txtMsg.Text += AlertaSQL.ToString() + "\r\n";
-
-                /*PERROS SI QUIEREN CREAR TABLAS NO OLVIDEN DE USAR: "USE NOMBRE_DE_BASE_DATOS"*/
             }
         }
 
@@ -665,6 +712,11 @@ namespace SQL_Parser
             fill_tables();
             fill_Database();
             //tabla.Clear();
+        }
+
+        private void btnCerrar_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
